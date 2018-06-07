@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信息管理系统V1.0</title>
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/login.css">
+  <!--[if IE]>
+      <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script>
+      var public="__PUBLIC__";
+      var app="__APP__";
+  </script>
+</head>
+<body>
+  <div class="signin">
+    <div class="signin-head"><img src="__PUBLIC__/images/head_1201.png" alt="" class="img-circle"></div>
+    <div class="form-signin" role="form">
+        <input type="text" id="username" class="form-control" placeholder="用户名" required autofocus />
+        <input type="password" id="userpass" class="form-control" placeholder="密码" required />
+        <button class="btn btn-lg btn-warning btn-block" type="submit" id="onlogin">登录系统</button>
+        <div class="tips"></div>
+    </div>
+    <div class="copy">{$sys['systemname']}</div>
+  </div>
+  <script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <script src="__PUBLIC__/js/supersized.3.2.7.min.js"></script>
+  <script src="__PUBLIC__/js/supersized-init.js"></script>
+</body>
+</html>

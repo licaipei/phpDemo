@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        考核字段信息{if !empty($field)}编辑{else}添加{/if}
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>系统配置</li>
+        <li class="active">考核字段管理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <i class="fa fa-edit"></i>
+              <h3 class="box-title">考核字段{if !empty($field)}编辑{else}添加{/if}</h3>
+            </div>
+            <!-- /.box-header -->
+            <form  method="post" action="__URL__/{if !empty($field)}edit{else}add{/if}.html">
+            <div class="box-body">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-database">&nbsp;</i>字段名</span>
+                <input type="text" name="field" value="{$field}" class="form-control" placeholder="字段名">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-database">&nbsp;</i>字段类型</span>
+                  <select class="form-control" name="type">
+                    <option value="int(20)"{if $type=='int(20)'} selected="selected"{/if}>int整型</option>
+                    <option value="varchar(255)"{if $type=='varchar(255)'} selected="selected"{/if}>文本型</option>
+                    <option value="decimal(10,2)"{if $type=='decimal(10,2)'} selected="selected"{/if}>浮点型</option>
+                    <option value="int(10)"{if $type=='int(10)'} selected="selected"{/if}>日期型</option>
+                  </select>
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-database">&nbsp;</i>字段注释</span>
+                <input type="text" name="comment" value="{$comment}" class="form-control" placeholder="字段注释">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-database">&nbsp;</i>考核分值</span>
+                <input type="text" name="scores" value="{$info['scores']}" class="form-control" placeholder="考核分值">
+              </div>
+            </div>
+            <div class="box-footer clearfix">
+            <input type="hidden" name="oldfield" value="{$field}" />
+            <input type="submit" class="btn btn-sm btn-primary pull-left" value="保存信息"/>
+            </div>
+            </form>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="__ROOT__/../public/bootstrap/dist/js/demo.js"></script>
+</body>
+</html>

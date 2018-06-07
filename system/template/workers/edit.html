@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit|ie-stand|ie-comp">
+  <meta http-equiv ="X-UA-Compatible" content = "IE=edge,chrome=1"/>
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/syseditor/themes/default/default.css" />
+  <script src="__ROOT__/../public/syseditor/kindeditor.js"></script>
+  <script src="__ROOT__/../public/syseditor/lang/zhCN.js"></script>
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+<script>
+	KindEditor.ready(function(K) {
+		var editor = K.editor({
+			allowFileManager : true
+		});
+		K('#upimgs').click(function() {
+			editor.loadPlugin('image', function() {
+				editor.plugin.imageDialog({
+					imageUrl : K('#photo').val(),
+					clickFn : function(url, title, width, height, border, align) {
+						K('#photo').val(url.split('/upfiles/image/').pop());
+						K('#showimgs').html('<img src="'+url+'" style=" border:1px solid #ddd; padding:1px; width:120px; margin-right:10px;"/>');
+						editor.hideDialog();
+					}
+				});
+			});
+		});
+	});
+</script>
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        员工信息{if !empty($info['id'])}编辑{else}添加{/if}
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>部门管理</li>
+        <li class="active">员工信息管理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <i class="fa fa-edit"></i>
+              <h3 class="box-title">员工信息{if !empty($info['id'])}编辑{else}添加{/if}</h3>
+            </div>
+            <!-- /.box-header -->
+            <form  method="post" action="__URL__/{if !empty($info['id'])}edit{else}add{/if}.html">
+            <div class="box-body">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-sitemap">&nbsp;</i>所属部门</span>
+                  <select class="form-control" name="departid">
+                    {each $sort $vo}
+                    <option value="{$vo['id']}"{if $vo['id']==$info['departid']} selected="selected"{/if}>{$vo['name']}</option>
+                    {/each}
+                  </select>
+              </div>
+              <br/>
+              <table>
+                <tr>
+                  <td id="showimgs">{if !empty($info['photo'])}<img src="__ROOT__/../upfiles/image/{$info['photo']}" style=" border:1px solid #ddd; padding:1px; width:120px; margin-right:10px;"/>{/if}</td>
+                  <td><div class="btn btn-app" id="upimgs" style="margin:0px;"><i class="fa fa-upload"></i> 证件照上传  </div></td>
+                </tr>
+              </table>
+              <div class="input-group" style="display:none">
+                <span class="input-group-addon"><i class="fa fa-file-picture-o">&nbsp;</i>证件照</span>
+                <input type="text" name="photo" id="photo" value="{$info['photo']}" class="form-control" placeholder="证件照">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user">&nbsp;</i>真实姓名</span>
+                <input type="text" name="realname" value="{$info['realname']}" class="form-control" placeholder="姓名">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-male">&nbsp;</i>所属民族</span>
+                <input type="text" name="nation" value="{$info['nation']}" class="form-control" placeholder="所属民族">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar">&nbsp;</i>出生日期</span>
+                <input type="text" name="borth" value="{if !empty($info['borth'])}{date('Y-m-d',$info['borth'])}{/if}" class="form-control form_datetime" placeholder="点击选择">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar">&nbsp;</i>入职时间</span>
+                <input type="text" name="entrydate" value="{if !empty($info['entrydate'])}{date('Y-m-d',$info['entrydate'])}{/if}" class="form-control form_datetime" placeholder="点击选择">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar">&nbsp;</i>离职时间</span>
+                <input type="text" name="leavedate" value="{if !empty($info['leavedate'])}{date('Y-m-d',$info['leavedate'])}{/if}" class="form-control form_datetime" placeholder="点击选择">
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key">&nbsp;</i>管理角色</span>
+                  <select class="form-control" name="group_id">
+                    {each $list $vo}
+                    <option value="{$vo['role_id']}"{if $vo['role_id']==$info['group_id']} selected="selected"{/if}>{$vo['name']}</option>
+                    {/each}
+                  </select>
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key">&nbsp;</i>考核字段权限</span>
+                <div style="border:1px solid #ddd;height:30px; padding-top:2px; padding-left:10px;">
+                  <?php if(!empty($fields)) foreach($fields as $vo){$arr=explode(',',$info['kaoheqx']);?>
+                  <?php if($vo['Comment']!='');?>
+                  {if $vo['Comment']!=''}
+                  <label style="font-weight:normal">
+                    <input name="kaoheqx[]" type="checkbox" value="<?php echo $vo['Field'];?>" <?php if(in_array($vo['Field'],$arr, TRUE)) echo 'checked';?>/>
+                    <?php echo $vo['Comment'];?>
+                  </label>&nbsp;
+                  <?php }}?>
+                </div>
+              </div>
+              <br/>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key">&nbsp;</i>考核规则</span>
+                <select class="form-control" name="gongshiID">
+                  {each $guize $vo}
+                  <option value="{$vo['id']}"{if $vo['id']==$info['gongshiID']} selected="selected"{/if}>{$vo['name']}（{$vo['gongshi']}）</option>
+                  {/each}
+                </select>
+              </div>
+            </div>
+            <div class="box-footer clearfix">
+            <input type="hidden" name="id" value="{$info['id']}" />
+            <input type="submit" class="btn btn-sm btn-primary pull-left" value="保存信息"/>
+            </div>
+            </form>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script type="text/javascript" src="__ROOT__/../public/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<link href="__ROOT__/../public/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="__ROOT__/../public/bootstrap/plugins/iCheck/all.css">
+<script src="__ROOT__/../public/bootstrap/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript">
+$(".form_datetime").datetimepicker({
+	language:'cn',
+	format: 'yyyy-mm-dd',
+	minView: "month",
+	autoclose: true,
+	todayBtn: true
+});
+	$(".input-group input[type='checkbox']").iCheck({
+	  checkboxClass: 'icheckbox_minimal-red',
+	  radioClass: 'iradio_minimal-red'
+	});
+</script>     
+</body>
+</html>

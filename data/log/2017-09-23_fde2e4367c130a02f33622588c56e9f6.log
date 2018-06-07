@@ -1,0 +1,4 @@
+2017-09-23 08:42:40 | 218.108.4.186 | /index.php/visit/index.html | 无法连接到数据库服务器<br>
+					<b>SQL</b>: SELECT * FROM zt_site  WHERE domain='www.ztnews.net' or domain1='www.ztnews.net' LIMIT 1<br>
+					<b>错误详情</b>: Unknown MySQL server host 'localhost' (11004)<br>
+					<b>错误代码</b>:2005<br>

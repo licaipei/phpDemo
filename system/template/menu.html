@@ -1,0 +1,96 @@
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      {if !empty($leftmenu)}
+      <ul class="sidebar-menu">
+        {each $leftmenu $vo}
+        <li class="treeview active">
+          <a href="#">
+            <i class="fa {if !empty($vo['icon'])}{$vo['icon']}{else}fa-list-alt{/if}"></i> <span>{$vo['title']}</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          {if empty($vo['children'])}
+          {if !empty($childmenu[$vo['menu_id']])}
+          <ul class="treeview-menu">
+            {each $childmenu[$vo['menu_id']] $ho}
+            <li {if $ho['menu_id']==$onmenu}class="active"{/if}><a href="__APP__/{$ho['module']}/{$ho['action']}"><i class="fa {if !empty($ho['icon'])}{$ho['icon']}{else}fa-circle-o{/if}"></i> {$ho['title']}</a></li>
+            {/each}
+          </ul>
+          {/if}
+          {/if}
+          {if !empty($vo['children'])}
+          <ul class="treeview-menu">
+            {each $vo['children'] $vo1}
+            <li>
+              <a href="#"><i class="fa {if !empty($vo1['icon'])}{$vo1['icon']}{else}fa-list-alt{/if}"></i> {$vo1['title']}
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              {if empty($vo1['children'])}
+              {if !empty($childmenu[$vo1['menu_id']])}
+              <ul class="treeview-menu">
+                {each $childmenu[$vo1['menu_id']] $ho1}
+                <li {if $ho1['action']==$sysaction}class="active"{/if}><a href="__APP__/{$ho1['module']}/{$ho1['action']}"><i class="fa fa-circle-o"></i> {$ho1['title']}</a></li>
+                {/each}
+              </ul>
+              {/if}
+              {/if}
+              {if !empty($vo1['children'])}
+              <ul class="treeview-menu">
+                {each $vo1['children'] $vo2}
+                <li>
+                  <a href="#"><i class="fa {if !empty($vo2['icon'])}{$vo2['icon']}{else}fa-list-alt{/if}"></i> {$vo2['title']}
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  {if empty($vo2['children'])}
+                  {if !empty($childmenu[$vo2['menu_id']])}
+                  <ul class="treeview-menu">
+                    {each $childmenu[$vo2['menu_id']] $ho2}
+                    <li {if $ho2['action']==$sysaction}class="active"{/if}><a href="__APP__/{$ho2['module']}/{$ho2['action']}"><i class="fa fa-circle-o"></i> {$ho2['title']}</a></li>
+                    {/each}
+                  </ul>
+                  {/if}
+                  {/if}
+                  {if !empty($vo2['children'])}
+                  <ul class="treeview-menu">
+                    {each $vo2['children'] $vo3}
+                    <li>
+                      <a href="#"><i class="fa {if !empty($vo3['icon'])}{$vo3['icon']}{else}fa-list-alt{/if}"></i> {$vo3['title']}
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                      </a>
+                      {if empty($vo3['children'])}
+                      {if !empty($childmenu[$vo3['menu_id']])}
+                      <ul class="treeview-menu">
+                        {each $childmenu[$vo3['menu_id']] $ho3}
+                        <li {if $ho3['action']==$sysaction}class="active"{/if}><a href="__APP__/{$ho3['module']}/{$ho3['action']}"><i class="fa fa-circle-o"></i> {$ho3['title']}</a></li>
+                        {/each}
+                      </ul>
+                      {/if}
+                      {/if}
+                    </li>
+                    {/each}
+                  </ul>
+                  {/if}
+                </li>
+                {/each}
+              </ul>
+              {/if}
+            </li>
+            {/each}
+          </ul>
+          {/if}
+        </li>
+        {/each}
+      </ul>
+      {/if}
+    </section>
+    <!-- /.sidebar -->
+  </aside>

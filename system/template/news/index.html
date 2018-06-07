@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<link href="__PUBLIC__/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.ztree.core-3.5.min.js"></script>
+<script type="text/javascript" src="__ROOT__/../public/js/imgshow.js"></script>
+<SCRIPT type="text/javascript">
+var setting = {
+	view: {
+		dblClickExpand: false,
+		addDiyDom: addMenu
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeClick: beforeClick
+	}
+};
+var zNodes ={$tree};
+function addMenu(treeId, treeNode) {
+}
+function beforeClick(treeId, treeNode) {
+	if (!treeNode.isParent) {
+		//alert(treeNode.file);
+		//location.href=treeNode.file;
+		//$('#shownews').load(treeNode.file);
+		location.href= treeNode.file;
+		return false;
+	} else {
+		return true;
+	}
+}
+$(document).ready(function(){
+	$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	$('.tablelist tbody tr:odd').addClass('odd');
+    //快速编辑
+    $('.tablelist tr').hover(
+        function () {
+            $(this).find('.quickeditor').show();
+        },
+        function () {
+            $(this).find('.quickeditor').hide();
+        }
+    );
+});
+</SCRIPT>
+</head>
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="__APP__/index/welcome.html">首页</a></li>
+    <li><a href="__URL__/index.html">内容管理</a></li>
+    <li><a href="#">{$cur_cat['name']}</a></li>
+    </ul>
+    </div>
+    <div class="rightinfo">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="185" valign="top">
+      <div style="width:175px; border:1px solid #d3dbde;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px; padding-bottom:10px;">
+        <div style="margin-top:0px; margin-bottom:10px; background:#f5f8f9; height:35px; line-height:35px; text-align:center; color:#333; font-size:14px; border-bottom:1px solid #d3dbde;"><span>内容分类</span></div>    
+        <ul id="treeDemo" class="ztree" style="width:165px; overflow:hidden"></ul>
+      </div>
+    </td>
+    <td valign="top">
+    <div id="shownews">
+<form name="del_form" action="__URL__/wepush.html" method="post"> 
+      <div class="tools">
+          <ul class="toolbar">
+            <li>
+            <span><img src="__PUBLIC__/images/wx.png" width="24" /></span>
+            <input name="" type="submit" value="微信推送" onClick="return confirm('确认要推送信息！')" style="background-color:transparent; height:32px;border:none; outline:medium;"/>
+            </li>
+          <li><a href="__URL__/index-{$cat_id}.html"><span><img src="__PUBLIC__/images/t05.png" /></span>{if !empty($cur_cat['name'])}{$cur_cat['name']}{/if}信息管理</a></li>
+          {if !empty($cur_cat['name'])}<li><a href="__URL__/add-{$cat_id}.html"><span><img src="__PUBLIC__/images/t01.png" /></span>{if !empty($cur_cat['name'])}{$cur_cat['name']}{/if}信息添加</a></li>{/if}
+          </ul>
+          <ul class="toolbar1">
+          </ul>
+      </div>
+      <table class="tablelist">
+          <thead>
+          <tr>
+          <th width="45" style="text-align:center; text-indent:0px;"><input type="checkbox" name="chkAll" value="checkbox" onclick="CheckAll(this.form)" style="display:none"/></th>
+          <th width="50" style="padding:0px; text-align:center">ID</th>
+          <th>文章标题</th>
+          <th width="120"></th>
+          <th>浏览量</th>
+          <th>发布时间</th>
+          <th width="200">管理操作</th>
+          </tr>
+          </thead>
+          <tbody>
+  {if !empty($list)}{each $list $vo}
+          <tr>
+          <td align="center" valign="middle" style="text-indent:0px;"><input name="del_id[]" type="checkbox" id="del_id[]" value="{$vo['id']}" /></td>
+          <td style="padding-left:0px; margin:0px; text-align:center">{$vo['id']}</td>
+          <td style="border-right:0px;">
+          <div style="float:left"><a href="__URL__/edit-{$vo['id']}.html">{$vo['title']}</a></div>
+          {if !empty($vo['picture'])}<div style="float:left"><a href="javascript:void(0);" rel="{$vo['picture']}" class="class_pic"><img src="__PUBLIC__/images/icon/pic.gif" align="absmiddle" style="margin-left:0px; margin-top:11px"></a></div>{/if}
+          <div style="clear:both"></div>
+          </td>
+          <td>
+          <div class="quickeditor" style=" display:none">
+          <a href="__URL__/edit-{$vo['id']}.html" title="编辑内容">编辑内容</a>
+          <a href="{if !empty($vo['url'])}{$vo['url']}{else}__ROOT__/../index.php/{if $vo['mx']==2}about/index{else}news/details{/if}-{$vo['id']}.html{/if}" title="预览内容" target="_blank">预览内容</a>
+          </div>        
+          </td>
+          <td>{$vo['views']}</td>
+          <td><?php echo date('Y-m-d H:i:s',$vo['create_time']);?></td>
+          <td>
+          {if $vo['mx']==2}{else}
+           {if $cur_cat['pid']=='2'}
+           <?php if($vo['recommend']){?>
+                  <a href="__URL__/state-recommend-{$vo['id']}-0.html" target="_self"><font color="#009900">置顶</font></a> | 
+           <?php }else{?>
+                  <a href="__URL__/state-recommend-{$vo['id']}-1.html" target="_self"><font color="#FF0000">置顶</font></a> | 
+           <?php }?>
+           {/if}
+           <?php if($vo['status']){?>
+                  <a href="__URL__/state-status-{$vo['id']}-0.html" target="_self"><font color="#009900">已审核</font></a> | 
+           <?php }else{?>
+                  <a href="__URL__/state-status-{$vo['id']}-1.html" target="_self"><font color="#FF0000">未审核</font></a> | 
+                  
+           <?php }?>
+           {/if}
+           <a  href="__URL__/edit-{$vo['id']}.html" target="_self">修改</a> 
+          {if $vo['mx']==2}{else} | 
+          <a  href="__URL__/del-{$vo['id']}.html" target="_self" onClick="return confirm('确定要删除吗？')">删除</a>
+          {/if}        
+          </td>
+          </tr> 
+  {/each}
+  {else}
+          <tr>
+          <td colspan="6" class="red">暂无内容信息</td>
+          </tr>
+  {/if}       
+          </tbody>
+      </table>
+</form>
+      <div class="pagin">
+          <ul class="paginList">
+          {$page}
+          </ul>
+      </div>
+      </div>
+    </td>
+  </tr>
+</table>
+    </div>
+    <script type="text/javascript">
+    //栏目形象图
+    $(".class_pic").powerFloat({
+        targetMode: "ajax"
+    });
+	</script>
+</body>
+</html>

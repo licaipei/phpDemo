@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$sys['systemname']}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+    <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+    <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+    <!--[if lt IE 9]>
+    <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+    <script src="__ROOT__/../public/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--头部公用部分-->
+    {include file='top'}
+    <!--左部菜单公用部分-->
+    {include file='menu'}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                点击量统计管理
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+                <li>稿件统计管理</li>
+                <li class="active">点击量统计管理</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title"><i class="fa fa-pie-chart">&nbsp;</i>点击量统计管理</h3>
+
+                            <div class="box-tools">
+                                <form action="__URL__/searchviews-{$info['id']}.html">
+                                    <div class="input-group" style="width:200px; float:left; margin-left:10px;">
+                                        <span class="input-group-addon"><i class="fa fa-calendar">&nbsp;</i>起始日期</span>
+                                        <input type="text" name="startday" class="form-control form_datetime" placeholder="点击选择" value="{$startday}">
+                                    </div>
+                                    <div class="input-group" style="width:200px; float:left; margin-left:10px;">
+                                        <span class="input-group-addon"><i class="fa fa-calendar">&nbsp;</i>结束日期</span>
+                                        <input type="text" name="endday" class="form-control form_datetime" placeholder="点击选择" value="{$endday}">
+                                    </div>
+                                    <button class="btn btn-sm btn-default pull-left" id="onsearch" style="float:left; margin-left:10px;"><i class="fa fa-search">&nbsp;</i>查看统计</button>
+                                    <div style="clear:both"></div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>所属站点</th>
+                                    <th>稿件标题</th>
+                                    <th>稿件URL</th>
+                                    <th>总(PV)</th>
+                                    <th>总(IP)</th>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa fa-sitemap" style="color:#39C">&nbsp;</i><a href="__URL__/index.html?domainid={$vo['domainid']}">{$info['sitename']}</a></td>
+                                    <td>{$info['title']}</td>
+                                    <td><a href="{$info['url']}" target="_blank" title="{$info['url']}"><i class="fa fa-internet-explorer" style="color:#090">访问页面</i></a></td>
+                                    <td>{if !empty($info['hits'])}{$info['hits']}{else}0{/if}</td>
+                                    <td>{if !empty($info['ipnums'])}{$info['ipnums']}{else}0{/if}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        <!-- /.box-body -->
+                        <div class="box-footer clearfix">
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                    <!-- Main content -->
+                    <div class="row">
+                        <!-- /.col (LEFT) -->
+                        <div class="col-md-12">
+                            <!-- LINE CHART -->
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><i class="fa fa-pie-chart">&nbsp;</i>页面访问统计图</h3>
+
+                                    <div class="box-tools pull-right" style="display: none;">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div id="container" style="padding-top:25px;"></div>
+                                <div class="box-body chart-responsive" style="display: none;">
+                                    <div class="chart" id="line-chart" style="height: 300px;"></div>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col (RIGHT) -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- /.content -->
+                </div>
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    {include file='copy'}
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/sweet/sweetalert.js"></script>
+<link rel="stylesheet" type="text/css" href="__ROOT__/../public/sweet/sweetalert.css">
+<script type="text/javascript" src="__ROOT__/../public/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<link href="__ROOT__/../public/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+        language:'cn',
+        format: 'yyyy-mm-dd',
+        minView: "month",
+        autoclose: true,
+        todayBtn: true
+    });
+</script>
+<!-- AdminLTE App -->
+<!-- 1. Add these JavaScript inclusions in the head of your page -->
+<script type="text/javascript" src="__ROOT__/../public/highcharts/js/jquery.min.js"></script>
+<script type="text/javascript" src="__ROOT__/../public/highcharts/js/highcharts.js"></script>
+<!-- 1a) Optional: the exporting module -->
+<script type="text/javascript" src="__ROOT__/../public/highcharts/js/modules/exporting.js"></script>
+<!-- 2. Add the JavaScript to initialize the chart on document ready -->
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'line',
+                marginRight: 130,
+                marginBottom: 25
+            },
+            title: {
+                text: '页面访问走势图',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '{$startday} 至 {$endday}',
+                x: -20
+            },
+            xAxis: {
+                categories: [{$categories}]
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y;
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+            series: [{
+                name: '点击量(PV)',
+                data: [{$daypv}]
+            }, {
+                name: '独立IP数',
+                data: [{$dayip}]
+            }]
+        });
+    });
+</script>
+</body>
+</html>

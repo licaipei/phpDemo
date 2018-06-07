@@ -1,0 +1,37 @@
+2017-07-28 10:00:25 | 220.164.216.148 | /index.php/statistics/index.html |index.html?title=%E5%B7%A7%E5%AE%B6%E5%8E%BF2017%E5%B9%B4%E5%8E%BF%E5%9F%8E%E8%A7%84%E5%88%92%E5%8C%BA%E5%86%85%E5%8C%BB%E9%99%A2%E5%85%AC%E5%BC%80%E9%80%89%E8%B0%83%E5%8C%BB%E5%8A%A1%E4%BA%BA%E5%91%98%E5%AE%9E%E8%B7%B5%E6%8A%80%E8%83%BD%E6%93%8D%E4%BD%9C%E5%8F%8A%E7%AC%94%E8%AF%95%E6%88%90%E7%BB%A9%E5%85%AC%E5%91%8A%EF%BC%88%E7%AC%AC%E4%B8%89%E5%8F%B7%EF%BC%89&fromip=182.140.177.165&fromaddress=%E5%9B%9B%E5%B7%9D%E7%9C%81&domain=www.ynqjnews.net&pageurl=http://www.ynqjnews.net/gonggao/2017操作方法在statistics模块中不存在
+2017-07-28 15:26:36 | 218.63.70.188 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: UPDATE zt_visit_hits SET hits=hits+1  WHERE visitid='561' and times='20170728'<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:36 | 101.226.33.240 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM zt_visit_hits  WHERE visitid='667' and times='20170728' LIMIT 1<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:36 | 218.63.70.188 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM zt_visit_hits  WHERE visitid='667' and times='20170728' LIMIT 1<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:36 | 101.226.33.224 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM zt_visit_hits  WHERE visitid='667' and times='20170728' LIMIT 1<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:36 | 222.220.132.132 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM zt_visit_hits  WHERE visitid='561' and times='20170728' LIMIT 1<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:36 | 222.220.132.132 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM zt_visit_hits  WHERE visitid='667' and times='20170728' LIMIT 1<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:36 | 101.226.65.108 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM zt_visit_hits  WHERE visitid='561' and times='20170728' LIMIT 1<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:37 | 101.226.33.239 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: SELECT * FROM zt_visit_hits  WHERE visitid='561' and times='20170728' LIMIT 1<br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>
+2017-07-28 15:26:37 | 42.156.139.5 | /index.php/visit/index.html | MySQL Query Error<br>
+					<b>SQL</b>: INSERT INTO zt_visit_hits  (`visitid`,`times`,`hits`) VALUES ('681','20170728','1') <br>
+					<b>错误详情</b>: Lost connection to MySQL server during query<br>
+					<b>错误代码</b>:2013<br>

@@ -1,0 +1,5 @@
+2017-09-09 00:39:25 | 202.106.222.26 | /index.php |%2e模块不存在
+2017-09-09 00:40:42 | 202.106.222.26 | /index.php/module/action/param1/${@print(base64_decode(SSBsb3ZlIGppbmdqaW5n))} |module模块不存在
+2017-09-09 00:42:11 | 202.106.222.26 | /index.php/Main_Page |Main_Page模块不存在
+2017-09-09 00:42:12 | 202.106.222.26 | /index.php/mw-config |mw-config模块不存在
+2017-09-09 00:42:12 | 202.106.222.26 | /index.php/RELEASE-NOTES |RELEASE-NOTES模块不存在

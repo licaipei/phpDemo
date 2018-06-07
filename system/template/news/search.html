@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$title}</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/admin.css">
+<script type="text/javascript" src="__ROOT__/../public/js/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/../public/js/imgshow.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/tr.js"></script>
+</head>
+<body>
+<div class="parth">当前位置：{$title}</div>
+<div class="conbox">
+<div class="table_box">
+  <div class="manger_type"><a href="__URL__/index.html">文章管理</a><a href="__URL__/add.html">添加文章</a></div>
+  <div class="m_so">
+<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+  <form action="__URL__/search.html" method="get" target="_self">  
+    <select name=""  id="jumpMenu" onChange="MM_jumpMenu('self',this,0)" >
+      <option value="" disabled="disabled" selected="selected">选择栏目查看</option>
+			   <?php foreach($cat as $vo){ ?>    
+					 <?php if($vo['id']==$sort){ ?>
+						 <option value="__URL__/index-{$vo['id']}.html" selected="selected">{$vo['cname']}</option> 
+					  <?php }else{ ?>
+							 <option value="__URL__/index-{$vo['id']}.html">{$vo['cname']}</option> 
+					  <?php } ?> 
+			   <?php } ?> 
+    </select>	  
+    <span style="padding-left:10px;"></span>
+    <input name="keyword" type="text" size="20" />
+	<input name="do" type="hidden" value="yes" />
+	<input type="submit"  value="搜索"/>
+  </form>
+
+  </div>
+  <table  cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td width="50" align="center" class="table_head" a>ID</th>
+      <td class="table_head">文章标题</td>
+      <td class="table_head" width="120">&nbsp;</td>
+      <td class="table_head">所属栏目</td>
+      <td class="table_head">浏览量</td>
+      <td class="table_head">发布人</td>
+      <td class="table_head">发布时间</td>
+      <td width="180" class="table_head">管理操作</td>
+    </tr>
+      <?php if(!empty($list)) foreach($list as $vo){?>
+      <tr>
+        <td align="center">{$vo['id']}</td>
+        <td>
+        <a href="__URL__/edit-{$vo['id']}.html"><span class="">{$vo['title']}</span></a>
+        {if !empty($vo['picture'])}<span><a href="javascript:void(0);" rel="{$vo['picture']}" class="class_pic"><img src="__PUBLIC__/images/icon/pic.gif" align="absmiddle" style="margin-left:5px;"></a><span>{/if}
+        </td>
+        <td>
+        &nbsp;<span class="quickeditor" style=" display:none">
+        <a href="__URL__/edit-{$vo['id']}.html" title="编辑内容">编辑内容</a>
+        <a href="__ROOT__/../news/detail-{$vo['id']}.html" title="预览内容" target="_blank">预览内容</a>
+        </span>
+        </td>
+        <td><a href="__URL__/index-{$vo['cat_id']}.html" target="_self">{$vo['cat_name']}</a></td>
+        <td>{$vo['views']}</td>
+        <td>{$vo['create_username']}</td>
+        <td><?php $vo['create_time']=date('Y-m-d H:i:s',$vo['create_time']);?>{$vo['create_time']}</td>
+        <td>{if $vo['mx']==2}{else}
+		 <?php if($vo['status']){?>
+				<a href="__URL__/state-status-{$vo['id']}-0.html" target="_self"><font color="#009900">已审核</font></a> | 
+		 <?php }else{?>
+				<a href="__URL__/state-status-{$vo['id']}-1.html" target="_self"><font color="#FF0000">未审核</font></a> | {/if}
+		 <?php }?>
+		<a  href="__URL__/edit-{$vo['id']}.html" target="_self">修改</a> 
+		{if $vo['mx']==2}{else} | 
+	    <a  href="__URL__/del-{$vo['id']}.html" target="_self" onClick="return confirm('确定要删除吗？')">删除</a>{/if}</td>
+		
+      </tr>
+    <?php }else{?>
+	<tr>
+	<td colspan="8" class="red">暂无信息</td>
+	</tr>
+    <?php }?>
+</table>
+<div class="manu">{$page}</div>
+<br/>
+</div>
+</div>
+<script>
+//快速编辑
+$('tr').hover(
+	function () {
+		$(this).find('.quickeditor').show();
+	},
+	function () {
+		$(this).find('.quickeditor').hide();
+	}
+);
+//栏目形象图
+$(".class_pic").powerFloat({
+    targetMode: "ajax"
+});
+</script>
+</body>
+</html>

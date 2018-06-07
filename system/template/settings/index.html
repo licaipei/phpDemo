@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        系统设置
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>系统设置</li>
+        <li class="active">系统配置</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- Custom Tabs -->
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-gear">&nbsp;</i>系统设置</a></li>
+              <li style="display:none"><a href="#tab_2" data-toggle="tab"><i class="fa fa-magic">&nbsp;</i>SEO配置</a></li>
+            </ul>
+            <form method="post" action="__URL__/index.html">
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1">
+                <div class="box-body">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-television">&nbsp;</i>系统名称</span>
+                    <input type="text" name="systemname" value="{$config['systemname']}" class="form-control" placeholder="系统名称">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa  fa-columns">&nbsp;</i>系统版本</span>
+                    <input type="text" name="ver" value="{$config['ver']}" class="form-control" placeholder="系统版本">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa  fa-columns">&nbsp;</i>统计有效时间（单位秒）</span>
+                    <input type="text" name="cookietime" value="{$config['cookietime']}" class="form-control" placeholder="统计有效时间">
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer clearfix">
+              <input type="hidden" name="id" value="{$info['id']}" />
+              <input type="submit" class="btn btn-sm btn-primary pull-left" value="保存信息"/>
+              </div>
+              <div class="tab-pane" id="tab_2">
+                <div class="box-body">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-television">&nbsp;</i>网站名称</span>
+                    <input type="text" name="sitetit" value="{$config['sitetit']}" class="form-control" placeholder="网站名称">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-internet-explorer">&nbsp;</i>网站标题</span>
+                    <input type="text" name="sitename" value="{$config['sitename']}" class="form-control" placeholder="网站标题">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-chain">&nbsp;</i>网站地址</span>
+                    <input type="text" name="siteurl" value="{$config['siteurl']}" class="form-control" placeholder="网站地址">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-tags">&nbsp;</i>网站关键词</span>
+                    <input type="text" name="keywords" value="{$config['keywords']}" class="form-control" placeholder="网站关键词">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-file-text-o">&nbsp;</i>网站描述</span>
+                    <input type="text" name="description" value="{$config['description']}" class="form-control" placeholder="网站描述">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user">&nbsp;</i>联系人</span>
+                    <input type="text" name="siteowner" value="{$config['siteowner']}" class="form-control" placeholder="联系人">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-area-chart">&nbsp;</i>联系地址</span>
+                    <input type="text" name="siteaddress" value="{$config['siteaddress']}" class="form-control" placeholder="联系地址">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-newspaper-o">&nbsp;</i>邮编地址</span>
+                    <input type="text" name="sitezip" value="{$config['sitezip']}" class="form-control" placeholder="邮编地址">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-phone">&nbsp;</i>联系电话</span>
+                    <input type="text" name="sitetel" value="{$config['sitetel']}" class="form-control" placeholder="联系电话">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa  fa-envelope-o">&nbsp;</i>站长邮箱</span>
+                    <input type="text" name="siteemail" value="{$config['siteemail']}" class="form-control" placeholder="站长邮箱">
+                  </div>
+                  <br/>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-camera-retro">&nbsp;</i>网站备案号</span>
+                    <input type="text" name="siteicp" value="{$config['siteicp']}" class="form-control" placeholder="网站备案号">
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+          </div>
+          <!-- nav-tabs-custom -->
+        </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+</body>
+</html>

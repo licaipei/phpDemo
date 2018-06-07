@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        账户管理
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>系统设置</li>
+        <li class="active">账户管理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">账户信息列表</h3>
+
+              <div class="box-tools">
+                    <div class="btn-group">
+                      <a href="__URL__/edit.html" class="btn btn-block btn-success" style="float:right"><span class="fa fa-plus">&nbsp;</span>添加用户</a>
+                    </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                      <tr>
+                          <th>ID</th>
+                          <th>登录名</th>
+                          <th>真实名</th>
+                          <th>最后登录时间</th>
+                          <th>最后登录IP</th>
+                          <th>状态</th>
+                          <th>
+                          管理操作
+                          </th>
+                      </tr>
+                      {if !empty($list)}{each $list $vo}
+                      <tr>
+                          <td>{$vo['id']}</td>
+                          <td> {if !empty($vo['username'])}{$vo['username']}{else}--{/if}</td>
+                          <td>
+                              {if !empty($vo['realname'])}{$vo['realname']}{else}--{/if}
+                          </td>
+                          <td> 
+                         {$vo['lastlogin_time']}</td>
+                          <td>
+                              {if !empty($vo['lastlogin_ip'])}{$vo['lastlogin_ip']}{else}--{/if}
+                          </td>
+                          <td>
+                              <div onClick="playmsg({$vo['id']},{$vo['islock']})" style="color:#{if $vo['islock']==0}00a65a{else}00b9ef{/if}"><i class="fa fa-{if $vo['islock']==0}unlock{else}lock{/if}">&nbsp;</i><span>{if $vo['islock']==0}未冻结{else}已冻结{/if}</span></div>
+                          <td>
+                              <div class="btn-group">
+                                  
+                                  <a href="__URL__/edit-{$vo['id']}.html" class="btn btn-xs btn-success"><i class="fa fa-edit"></i>&nbsp;修改</a>
+                                  
+                                  <button class="btn btn-xs btn-warning" onclick="delmessage({$vo['id']})">
+                                      <i class="fa fa-trash"></i>&nbsp;删除
+                                  </button>
+                              </div>
+                          </td>
+                      </tr>
+                      {/each}{else}        
+                      <tr>
+                          <td colspan="7" class="red">
+                          <span class="label label-warning"><i class="icon-warning-sign bigger-120"></i>暂无账户信息！</span>
+                          </td>
+                      </tr>
+                      {/if}
+              </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <ul class="pagination pagination-sm no-margin pull-right">
+              {$page}
+              </ul>
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<script src="__ROOT__/../public/sweet/sweetalert.js"></script>
+<link rel="stylesheet" type="text/css" href="__ROOT__/../public/sweet/sweetalert.css">
+<script type="text/javascript">
+	function playmsg(id,lock){
+		//alert(id+'-'+play)	
+		$.post("__URL__/islock.html", { 
+			id: id,
+			lock: lock
+		},function(data){
+			if(data=='冻结成功'){
+				swal("冻结成功", "", "success");
+				setTimeout(function(){window.location="__URL__/index.html";},2500);
+			}else if(data=='解冻成功'){
+                swal("解冻成功", "", "success");
+                setTimeout(function(){window.location="__URL__/index.html";},2500);
+            }else{
+				 swal(data, "", "error");
+			}
+		});
+	}
+	function delmessage(id){
+		//alert(id);
+		swal({
+			title: "您确定要删除吗?",
+			//text: "You will not be able to recover this imaginary file!",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: '#DD6B55',
+			confirmButtonText: '删除',
+			cancelButtonText: "取消",
+			closeOnConfirm: false,
+			closeOnCancel: true
+		},
+		function(isConfirm){
+			if (isConfirm){
+			  $.post("__URL__/del.html", {
+				  id: id 
+			  },function(data){
+				  if(data=='删除成功'){
+					  swal("删除成功!", "", "success");
+					  setTimeout(function(){window.location="__URL__/index.html";},2500); 
+				  }else{
+					   swal(data, "", "error");
+				  }
+			  });
+			}/* else {
+			  swal("已取消", "", "error");
+			}*/
+		});
+	}
+</script>
+</body>
+</html>

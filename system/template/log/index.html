@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/plugins/iCheck/all.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        系统日志
+        <small>操作日志管理</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>系统日志</li>
+        <li class="active">操作日志管理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">操作日志记录列表</h3>
+
+              <div class="box-tools">
+                <?php if(in_array('操作日志查询',$powertit) or $groupid==-1){?>
+                <form class="form-search" action="__URL__/search.html" method="get">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" id="keywords" name="keywords" class="form-control pull-right" placeholder="Search">
+
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default" id="onsearch"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+                </form>
+                <?php }?>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <?php if(in_array('操作日志删除',$powertit) or $groupid==-1){?>
+                  <th style="text-align:center">
+                  <span class="checkbox-toggle"><i class="fa fa-square-o" style="font-size:22px; color:#ccc;"></i></span>
+                  </th>
+                  <?php }?>
+                  <th>操作管理员</th>
+                  <th>操作日志</th>
+                  <th>操作IP</th>
+                  <th>操作时间</th>
+                </tr>
+                {if !empty($list)}{each $list $vo}
+                <tr>
+                  <?php if(in_array('操作日志删除',$powertit) or $groupid==-1){?>
+                  <td style="width:60px; text-align:center"><label><input type="checkbox" class="minimal-red" name="del_id[]" value="{$vo['id']}" /></label>
+                  </td>
+                  <?php }?>
+                  <td>{$vo['adminname']}</td>
+                  <td>{$vo['logtext']}</td>
+                  <td>{$vo['ip']}</td>
+                  <td><?php $vo['addtime']=date('Y-m-d G:i:s',$vo['addtime']);?>{$vo['addtime']}</td>
+                </tr>
+                {/each}
+                {else}   
+                <tr>
+                    <td colspan="5" class="red">
+                    <span class="label label-warning"><i class="icon-warning-sign bigger-120"></i>暂无操作日志！</span>
+                    </td>
+                </tr>
+                {/if}
+              </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+              <button class="btn btn-sm btn-primary pull-left" data-dismiss="modal" onclick="checkdel()">
+                  <i class="icon-trash"></i>
+                  批量删除
+              </button>
+			  <ul class="pagination pagination-sm no-margin pull-right">
+              {$page}
+              </ul>
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>                                
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/plugins/iCheck/icheck.min.js"></script>
+<script src="__ROOT__/../public/sweet/sweetalert.js"></script>
+<link rel="stylesheet" type="text/css" href="__ROOT__/../public/sweet/sweetalert.css">
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+		<script type="text/javascript">
+			$(".table input[type='checkbox']").iCheck({
+			  checkboxClass: 'icheckbox_minimal-red',
+			  radioClass: 'iradio_minimal-red'
+			});
+			$(".checkbox-toggle").click(function () {
+			  var clicks = $(this).data('clicks');
+			  if (clicks) {
+				//Uncheck all checkboxes
+				$(".table input[type='checkbox']").iCheck("uncheck");
+				$(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+			  } else {
+				//Check all checkboxes
+				$(".table input[type='checkbox']").iCheck("check");
+				$(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+			  }
+			  $(this).data("clicks", !clicks);
+			});
+			jQuery(function($) {
+			    $('#onsearch').on('click' , function(){
+					var keywords=$('#keywords').val();
+					if(keywords==''){
+						swal('请输入关键词', "", "warning");
+						return false;
+					}
+				});
+			
+				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+				function tooltip_placement(context, source) {
+					var $source = $(source);
+					var $parent = $source.closest('table')
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $source.offset();
+					var w2 = $source.width();
+			
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+					return 'left';
+				}
+			})
+			function checkdel(){ //jquery获取复选框值 
+				var arr=document.getElementsByName("del_id[]");
+				var a=new Array();
+				//arr是一个数组，就是所有checkbox的值；
+				for(i=0;i<arr.length;i++){
+					if(arr[i].checked){
+						if(arr[i].checked==true) {
+							a[i] = arr[i].value;	
+						}
+					}
+				}
+				if(a.length>0){
+				    //alert(a);
+					swal({
+                        title: "您确定要删除吗?",
+						//text: "You will not be able to recover this imaginary file!",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: '#DD6B55',
+						confirmButtonText: '删除',
+						cancelButtonText: "取消",
+						closeOnConfirm: false,
+						closeOnCancel: true
+					},
+					function(isConfirm){
+						if (isConfirm){
+						  $.post("__URL__/del.html", { 
+							  del_id: a 
+						  },function(data){
+							  if(data=='删除成功'){
+								  swal("删除成功!", "", "success");
+								  setTimeout(function(){window.location="__URL__/index.html";},2500); 
+							  }else{
+								   swal(data, "", "error");
+							  }
+						  });
+						}/* else {
+						  swal("已取消", "", "error");
+						}*/
+					});
+				}else{
+					swal("请选择要删除的内容", "", "error");	
+				}				
+			} 
+		</script>
+</body>
+</html>

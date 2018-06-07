@@ -1,0 +1,8 @@
+2017-08-16 11:24:45 | 60.160.21.30 | /index.php/statistics/index.html | 无法连接到数据库服务器<br>
+					<b>SQL</b>: SELECT * FROM zt_site  WHERE domain='www.ynqjnews.net' or domain1='www.ynqjnews.net' LIMIT 1<br>
+					<b>错误详情</b>: Can't connect to MySQL server on 'localhost' (10061)<br>
+					<b>错误代码</b>:2003<br>
+2017-08-16 11:24:47 | 60.160.21.30 | /index.php/statistics/index.html | 无法连接到数据库服务器<br>
+					<b>SQL</b>: SELECT * FROM zt_site  WHERE domain='www.ynqjnews.net' or domain1='www.ynqjnews.net' LIMIT 1<br>
+					<b>错误详情</b>: Can't connect to MySQL server on 'localhost' (10061)<br>
+					<b>错误代码</b>:2003<br>

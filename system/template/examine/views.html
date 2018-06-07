@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-list-alt">&nbsp;</i>{$uinfo['realname']}的考核信息</h4>
+</div>
+<div class="modal-body">
+    <div class="box-body table-responsive no-padding" style="margin-top:-16px;">
+        <table class="table table-hover">
+            <tr>
+                <th>上报年月</th>
+                {if !empty($checkfield)}{each $checkfield $vo}
+                {php $arr=explode(',',$uinfo['kaoheqx']);}
+                {if $vo['Comment']!=''}
+                {if in_array($vo['Field'],$arr, TRUE)}
+                <th>{$vo['Comment']}</th>
+                {/if}
+                {/if}
+                {/each}{/if}
+                <th>最后得分</th>
+            </tr>
+            {if !empty($userkaohe)}{each $userkaohe $vo}
+            <tr>
+                <td>{if !empty($vo['entrydate'])}{date('Y年m月',$vo['entrydate'])}{else}--{/if}</td>
+                {if !empty($checkfield)}{each $checkfield $vo1}
+                {php $arr=explode(',',$uinfo['kaoheqx']);}
+                {if $vo1['Comment']!=''}
+                {if in_array($vo1['Field'],$arr, TRUE)}
+                <td>{$vo[$vo1['Field']]}</td>
+                {/if}
+                {/if}
+                {/each}{/if}
+                <td>{$vo['score']}</td>
+            </tr>
+            {/each}{else}
+            <tr>
+                <td colspan="6" class="red">
+                    <span class="label label-warning"><i class="icon-warning-sign bigger-120"></i>暂无考核信息！</span>
+                </td>
+            </tr>
+            {/if}
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+</div>
+<script type="text/javascript">
+    $("#myModal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+</script>

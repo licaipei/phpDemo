@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        系统首页
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>系统配置</li>
+        <li class="active">菜单分组</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">操作日志记录列表</h3>
+
+              <div class="box-tools">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary" data-href="__URL__/index.html"><i class="fa fa-refresh">&nbsp;</i>权限管理</button>
+                      <button type="button" class="btn btn-success" data-href="__URL__/menus.html"><i class="fa fa-list-ul">&nbsp;</i>系统菜单分组</button>
+                    </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                  <thead>
+                  <tr>
+                  <th>分组名称</th>
+                  <th>菜单图标</th>
+                  <th>显示排序</th>
+                  <th>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {each $list $vo}
+                  <tr id="{$vo['menu_id']}">
+                  <td>{$vo['path']}<span data-field="title" style="cursor:pointer">{$vo['title']}</span></td>
+                  <td><span data-field="icon" style="cursor:pointer">{if !empty($vo['icon'])}<i class="fa {$vo['icon']}">&nbsp;</i>{$vo['icon']}{else}未设置{/if}</span></td>
+                  <td><span data-field="display_order" style="cursor:pointer">{$vo['display_order']}</span></td>
+                  <td><span data-op="addchild" style="cursor:pointer" class="btn btn-xs btn-success">新增</span>&nbsp;<span data-op="delete" style="cursor:pointer" class="btn btn-xs btn-warning">删除</span></td>
+                  </tr> 
+                  {/each}
+                  <tr>
+                  <td><input name="title" value="" type="text" class="form-control" style="width:200px;"/></td>
+                  <td><input name="icon" value="" type="text" class="form-control" style="width:50px;"/></td>
+                  <td><input name="display_order" value="" type="text" class="form-control" style="width:50px;"/></td>
+                  <td><span data-op="add" style="cursor:pointer;" class="btn btn-xs btn-success">新增</span></td>
+                  </tr> 
+                  </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<script src="__ROOT__/../public/sweet/sweetalert.js"></script>
+<link rel="stylesheet" type="text/css" href="__ROOT__/../public/sweet/sweetalert.css">
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".table tbody span[data-field]").click(function(event){
+		if(event.target.tagName=="SPAN"){
+			var id=$(this).parent().parent().attr("id"),field = $(this).attr("data-field"),oldcon=$(this).text();
+			$(this).html('<input type="text" style="width:200px; float:none" class="" value="'+oldcon+'" />');//'+($(this).width()+50)+'
+			$(this).find("input").focus().select().bind("blur",function(){
+				var editcon=$(this).val(),_this=$(this).parent();
+				if(oldcon!=editcon&&editcon!=""){
+					$.post("__URL__/upmenufield.html",{"upkeyid":id,"field":field,"value":editcon},function(result){
+						if(result.error==0) _this.html(editcon.replace(/\s/g, "\n"));
+					},"json");
+				}else _this.html(oldcon.replace(/\s/g, "\n"));
+			});
+		}
+	});
+	$(".table tbody span[data-op]").on('click',function(event){
+		if(event.target.tagName=="SPAN"){
+			var id=$(this).parent().parent().attr("id"),op = $(this).attr("data-op");
+			switch(op){
+				case 'add':
+				  var title = $(this).parent().parent().find("input[name='title']").val(),
+				  	  pid = $(this).attr("data-pid"),
+				  	  display_order = $(this).parent().parent().find("input[name='display_order']").val();
+				  	  icon = $(this).parent().parent().find("input[name='icon']").val();
+					  $.post("__URL__/menus.html",{"title":title,"parent_id":pid,"display_order":display_order,"icon":icon},function(result){
+						if(result.error==0) location.reload();
+						else tip(result.msg);
+					  },"json");
+				  break;
+				case 'delete':
+				  if(confirm("是否确认删除?")){
+					  $.post("__URL__/delmenu.html",{"menu_id":id},function(result){
+						if(result.error==0) location.reload();
+					  },"json");
+				  }else{return false;}
+				  break;
+				case 'addchild':
+					var parent_menu = $(this).parent().parent().find("td:first").text() + ' > ';
+					$('<tr><td>'+parent_menu+'<input name="title" value="" type="text" class="" style="width:200px; float:none"/></td><td><input name="icon" value="" type="text" class="" style="width:50px;"/></td><td><input name="display_order" value="" type="text" class="" style="width:50px;"/></td><td><span data-op="add" data-pid="'+id+'" style="cursor:pointer" class="btn btn-xs btn-success">确定</span>&nbsp;<span data-op="addchild_cancel" style="cursor:pointer" class="btn btn-xs btn-default">取消</span></td></tr>').insertAfter($(this).parent().parent());
+				  break;
+				case 'addchild_cancel':
+				  $(this).parent().parent().remove();
+				  break;  
+			}
+		}
+	});
+	
+	$(".tiptop a").on('click',function(){
+	  $(".tip").remove();
+	});
+
+  	$(".sure").on('click',function(){
+	  $(".tip").remove();
+	});
+
+	function tip(msg){
+		swal(msg, "", "error");
+	}
+});
+$('.btn').click(function(){
+	if($(this).data('href')){
+		location.href= $(this).data('href');
+	}
+});
+</script>
+</body>
+</html>
+

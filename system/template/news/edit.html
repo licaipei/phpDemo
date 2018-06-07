@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/css/style.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/select-ui.min.js"></script>
+<script type="text/javascript" src="__ROOT__/../public/js/jquery.js"></script>
+<script type="text/javascript" src="__ROOT__/../public/editor/kindeditor.js"></script>
+<script type="text/javascript" src="__ROOT__/../public/editor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+var editor;
+	KindEditor.ready(function(K) {
+	editor = K.create('textarea[name="content"]', {
+	allowFileManager : true
+});
+K('#image').click(function() {
+editor.loadPlugin('image', function() {
+editor.plugin.imageDialog({
+imageUrl : K('#picture').val(),
+clickFn : function(url, title, width, height, border, align) {
+K('#picture').val(url);
+editor.hideDialog();
+}
+});
+});
+});
+});
+function check_form(obj){
+	if(obj.title.value=='')
+	{
+		alert('文章标题不能为空');
+		obj.title.focus();
+		return false;
+	}
+	if(obj.cat_id.value=='')
+	{
+		alert('文章栏目不能为空');
+		obj.cat_id.focus();
+		return false;
+	}
+	return true;
+}
+
+$(document).ready(function(e) {
+    $(".select1").uedSelect({
+		width : 345			  
+	});
+});
+</script>
+</head>
+
+<body>
+
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="__APP__/index/welcome.html">首页</a></li>
+    <li><a href="__URL__/index.html">内容管理</a></li>
+    <li><a href="#">{$sort['name']}</a></li>
+    </ul>
+    </div>
+    <div class="rightinfo">
+    <div class="tools">
+    	<ul class="toolbar">
+        <li><a href="__URL__/index-{$info['cat_id']}.html"><span><img src="__PUBLIC__/images/t05.png" /></span>{if !empty($sort['name'])}{$sort['name']}{/if}信息管理</a></li>
+        <li><a href="__URL__/add-{$info['cat_id']}.html"><span><img src="__PUBLIC__/images/t01.png" /></span>{if !empty($sort['name'])}{$sort['name']}{/if}本分类信息添加</a></li>
+        </ul>
+        <ul class="toolbar1">
+        </ul>
+    </div>
+    </div>
+    
+    <div class="formbody" style="margin-top:-20px;">
+     <div class="formtitle" style="margin-top:0px"><span>信息编辑</span></div>
+   
+    <div id="usual1" class="usual"> 
+    
+    <div class="itab" style="display:none">
+  	<ul> 
+    <li><a href="#tab1" class="selected">信息编辑</a></li> 
+  	</ul>
+    </div> 
+    
+  	<div id="tab1" class="tabson">
+<form action="__URL__/edit.html" method="post">
+    <ul class="forminfo">
+    <li><label>信息标题<b>*</b></label>
+    <input name="title" id="title" type="text" value="{$info['title']}" class="dfinput" style="width:488px;">
+    <input type="hidden" name="cat_path" id="cat_path" value="{$sort['parth']}" size="100" class="fm_text"/>
+    <!--input id="font_color" name="font_color" type="text" value="{$info['font_color']}" class="fm_text"  style=" padding-left:2px; width:25px; {if !empty($info['font_color'])}background:{$info['font_color']}{/if}" />
+    <img src="__PUBLIC__/images/icon/color.png" class="corol_button" align="absmiddle" style="margin-left:5px" title="设置标题颜色"-->
+    <input type="hidden" name="cat_id" id="cat_id" size="100" class="fm_text" value="{$info['cat_id']}"/>
+    </li>
+    {if $sort['mx']!=2}
+    <li><label>外链地址</label>
+    <input name="url" id="url" type="text" class="dfinput" style="width:343px;" value="{$info['url']}"><i>请以“http://..”开头</i>
+    </li>
+    {/if}
+    <li><label>封面图片<b>*</b></label>
+    <input class="dfinput" name="picture" id="picture" value="{$info['picture']}" size="50" style="width:250px;" />
+    <input type="button" id="image" value="选择图片" class="btn" style="width:89px"/> &nbsp;<input type="button" class="btn" onclick="get_one_pic()" value="提取第一张图" />
+    </li>
+    <li><label>内容信息<b>*</b></label><textarea name="content" id="content" style="width:90%;height:350px;visibility:hidden; float:left;">{$info['content']}</textarea>
+    </li>
+    <li><label>视频文件</label>
+    <input name="video" id="video" type="text" value="{$info['video']}" class="dfinput" style="width:343px;"><i>请填写FLV格式的视频文件名，如：2015002.flv，并且确保文件在网站根目录video文件夹中</i>
+    </li>
+    <li><label>关键词</label>
+    <input name="keywords" id="keywords" type="text" value="{$info['keywords']}" class="dfinput" style="width:343px;">
+    </li>
+    <li><label>信息描述</label>
+    <textarea name="description" id="description" class="dfinput" style="width:343px; height:50px;" onKeyUp="check_length();">{$info['description']}</textarea>
+    &nbsp;&nbsp;<input type="hidden" id="" onclick="javascript:get_description()" class="fm_sub" value="提取描述" />
+    </li>
+    <li><label>发布时间<b>*</b></label>
+	<input name="create_time" type="text" id="create_time" value="<?php echo date('Y-m-d H:i:s',$info['create_time']);?>" size="50" maxlength="50"  class="dfinput" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"/><img src="__PUBLIC__/images/d04.png" style="margin-left:5px;" align="absmiddle">
+    </li>
+    <li style="display:none"><label>上级分类<b>*</b></label>  
+    <div class="vocation">
+    <select class="select1" name="pid">
+			<option value="0" selected="selected">无（作为一级栏目）</option>
+		   <?php if(is_array($cat)) foreach($cat as $vo){ ?>
+				 <?php if($vo['id']==$pid){ ?>
+					<option value="{$vo['id']}" selected="selected">{$vo['cname']}</option>
+				 <?php } else{?>    
+					 <option value="{$vo['id']}">{$vo['cname']}</option> 
+				 <?php } ?> 
+			<?php } ?>  
+    </select>
+    </div>
+    </li>
+    <li style="display:none"><label>是否审核</label>
+      <cite><input name="status" type="checkbox" value="1" checked="checked"/></cite>
+    </li>
+    <li>        
+    <input type="hidden" name="do" value="yes">
+    <input type="hidden" name="id" value="{$info['id']}">
+    <label>&nbsp;</label><input name="" type="submit" class="btn" value="保存信息"/></li>
+    </ul>
+</form>
+    </div> 
+	</div> 
+	<script src="__ROOT__/../public/laydate/laydate.js"></script> 
+    <script type="text/javascript">
+    $("#usual1 ul").idTabs(); 
+	$('.tablelist tbody tr:odd').addClass('odd');
+	//高级模式
+	function get_one_pic(){
+		var content=editor.html();
+		var imgreg = /<img.*?(?:>|\/>)/gi;
+		var srcreg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+		var arr = content.match(imgreg);
+		var src = arr[0].match(srcreg);
+		$("#picture").val(src[1]);
+		//alert('图片获取完毕');
+		}
+	</script>
+    </div>
+</body>
+</html>

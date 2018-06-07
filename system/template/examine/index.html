@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        考核信息管理
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li class="active">考核信息管理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"><i class="fa fa-tachometer">&nbsp;</i>考核信息管理</h3>
+
+              <div class="box-tools">
+                    <form action="__URL__/index.html" style="float:left;">
+                    <div class="input-group" style="width:200px; float:left; height:30px;">
+                      <span class="input-group-addon"><i class="fa fa-calendar">&nbsp;</i>年月份</span>
+                      <input type="text" name="entrydate" class="form-control form_datetime" placeholder="点击选择">
+                    </div>
+                    <button class="btn btn-sm btn-default pull-left" id="onsearch" style="float:left; margin-left:10px;"><i class="fa fa-search">&nbsp;</i>信息查询</button></form>
+                    <div class="btn-group" style="margin-left:10px; float:left;">
+                      <a href="__URL__/edit.html" class="btn btn-block btn-success" style="float:right"><span class="fa fa-plus">&nbsp;</span>考核信息添加</a>
+                    </div>
+                    <div style="clear:both"></div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                      <tr>
+                          <th>上报年月</th>
+                          {if !empty($checkfield)}{each $checkfield $vo}
+                          {php $arr=explode(',',$kaoheqx);}
+                          {if $vo['Comment']!=''}
+                          {if in_array($vo['Field'],$arr, TRUE)}
+                          <th>{$vo['Comment']}</th>
+                          {/if}
+                          {/if}
+                          {/each}{/if}
+                          <th>最后得分</th>
+                          <th>
+                          管理操作
+                          </th>
+                      </tr>
+                      {if !empty($list)}{each $list $vo}
+                      <tr>
+                          <td>{if !empty($vo['entrydate'])}{date('Y年m月',$vo['entrydate'])}{else}--{/if}</td>
+                          {if !empty($checkfield)}{each $checkfield $vo1}
+                          {php $arr=explode(',',$kaoheqx);}
+                          {if $vo1['Comment']!=''}
+                          {if in_array($vo1['Field'],$arr, TRUE)}
+                          <td>{$vo[$vo1['Field']]}</td>
+                          {/if}
+                          {/if}
+                          {/each}{/if}
+                          <td>{$vo['score']}</td>
+                          <td>
+                              <div class="btn-group">
+                                  
+                                  <a {if $nowmoth!=$vo['thismoth']}href="javascript:void(0)" title="该考核信息不是当月考核信息，不可以编辑！"  disabled="disabled"{else}href="__URL__/edit-{$vo['id']}.html"{/if} class="btn btn-xs btn-success"><i class="fa fa-edit"></i>&nbsp;编辑</a>
+                              </div>
+                          </td>
+                      </tr>
+                      {/each}{else}        
+                      <tr>
+                          <td colspan="7" class="red">
+                          <span class="label label-warning"><i class="icon-warning-sign bigger-120"></i>暂无考核信息！</span>
+                          </td>
+                      </tr>
+                      {/if}
+              </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+			  <ul class="pagination pagination-sm no-margin pull-right">
+              {$page}
+              </ul>
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<script src="__ROOT__/../public/layer/layer.js"></script>
+<script type="text/javascript" src="__ROOT__/../public/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<link href="__ROOT__/../public/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript">
+	$("select[name=department]").change(function(){
+		var departid=$(this).find("option:selected").attr("rel");
+		//alert(departid);
+		var ii = layer.load('信息加载中...');		
+		$("#workers").load("__URL__/ajaxdepartwokers.html?departid="+departid, function() {
+			layer.close(ii); 			
+		});
+	});
+	$(".form_datetime").datetimepicker({
+	language:'cn',
+	format: 'yyyy-mm',
+	weekStart: 1,
+	startView: 3,
+	minView: 3,
+	forceParse: false,
+	autoclose: true,
+	todayBtn: true
+});
+</script>     
+</body>
+</html>

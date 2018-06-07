@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        账户管理
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>系统配置</li>
+        <li class="active">缓存清理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">系统缓存信息</h3>
+
+              <div class="box-tools">
+                    <div class="btn-group">
+                    </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                <th>缓存类型</th>
+                <th>文件夹</th>
+                <th>缓存大小</th>
+                <th>管理操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                 <tr id="{$dbf}" >
+                   <td>数据库缓存</td>
+                   <td>{$dbf}</td>
+                   <td>{$dbsize}&nbsp;kb</td>
+                   <td><a href="Javascript:void(0)" class="btn bg-olive margin clear">清空</a></td>
+                 </tr>
+                 <tr id="{$templatef}" >
+                   <td>模板缓存</td>
+                   <td>{$templatef}</td>
+                   <td>{$temsize}&nbsp;kb</td>
+                   <td><a href="Javascript:void(0)" class="btn bg-olive margin clear">清空</a></td>
+                 </tr>
+                 <tr id="{$htmlf}" >
+                   <td>静态页缓存</td>
+                   <td>{$htmlf}</td>
+                   <td>{$htmlsize}&nbsp;kb</td>
+                   <td><a href="Javascript:void(0)" class="btn bg-olive margin clear">清空</a></td>
+                 </tr>
+                </tbody>
+            </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+     </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<script src="__ROOT__/../public/sweet/sweetalert.js"></script>
+<link rel="stylesheet" type="text/css" href="__ROOT__/../public/sweet/sweetalert.css">
+<script	language="javascript">
+  $(function ($) { 
+	$('.clear').click(function(){
+			if(confirm('确定要清空吗？')){
+			var delobj=$(this).parent().parent();
+			var type=delobj.attr('id');
+			$(this).unbind("click");
+			var stateob=$(this).parent()
+			stateob.html('努力处理中...');			
+			$.get("__URL__/index.html", {type:type},
+   				function(data){
+                   stateob.html(data);
+				   stateob.prev().html('0 kb');
+   			});
+			}
+	  });
+  });
+</script>
+</body>
+</html>

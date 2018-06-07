@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$sys['systemname']}</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/font-awesome4.5.0/font-awesome.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/css/ionicons.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="__ROOT__/../public/bootstrap/dist/css/skins/_all-skins.min.css">
+  <!--[if lt IE 9]>
+  <script src="__ROOT__/../public/js/html5shiv.min.js"></script>
+  <script src="__ROOT__/../public/js/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition fixed skin-blue sidebar-mini">
+<div class="wrapper">
+  <!--头部公用部分-->
+  {include file='top'}
+  <!--左部菜单公用部分-->
+  {include file='menu'}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        权限管理
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="__APP__/index/"><i class="fa fa-dashboard"></i> 系统首页</a></li>
+        <li>系统配置</li>
+        <li class="active">权限管理</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">权限管理信息</h3>
+
+              <div class="box-tools">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-primary" data-href="__URL__/updatefunctrl.html"><i class="fa fa-refresh">&nbsp;</i>模块功能更新</button>
+                      <button type="button" class="btn btn-success" data-href="__URL__/menus.html"><i class="fa fa-list-ul">&nbsp;</i>系统菜单分组</button>
+                    </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+    <table class="menutable table">
+      <thead>
+    	<tr>
+        <th>操作权限树</th>
+        <th>操作权限列表</th>
+        </tr>
+      </thead>
+      <tbody>
+    	<tr>
+        <td width="230" valign="top">
+        <ul id="treeDemo" class="ztree"></ul>
+        </td>
+        <td valign="top">
+        <table class="tablelist table table-hover">
+            <thead>
+            <tr>
+            <th>所属菜单</th>
+            <th>名称</th>
+            <!-- <th>菜单显示</th> -->
+            <th>操作模块/方法</th>
+            <th>显示排序</th>
+            <th>备注说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            {each $list $vo}
+            <tr id="{$vo['id']}">
+            <td><p style="float:left;" data-id="{$vo['menu_id']}" class="uew-select"><select class="form-control">
+            {each $menu $menu_id $title}
+            <option value="{$menu_id}"{if $menu_id==$vo['menu_id']} selected="selected"{/if}>{$title}</option>
+            {/each}
+            </select>
+            <span style="cursor:pointer; display:none">{php echo empty($menu[$vo['menu_id']])?'点击选择':$menu[$vo['menu_id']]}</span></p></td>
+            <td>{$vo['title']}</td>
+            <!--<td align="center"><span data-field="is_menu" style="cursor:pointer" title="1:显示，0：隐藏">{$vo['is_menu']}</span></td>-->
+            <td>{$vo['module']}/{$vo['action']}</td>
+            <td align="center"><span data-field="display_order" style="cursor:pointer">{$vo['display_order']}</span></td>
+            <td>{$vo['remark']}</td>
+            </tr> 
+            {/each}
+            </tbody>
+        </table>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+    
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>                                
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {include file='copy'}
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="__ROOT__/../public/bootstrap/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/ztree/jquery.ztree.core.js"></script>
+<link href="__PUBLIC__/ztree/zTreeStyle.css" rel="stylesheet" type="text/css" />
+<!-- Bootstrap 3.3.6 -->
+<script src="__ROOT__/../public/bootstrap/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="__ROOT__/../public/bootstrap/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="__ROOT__/../public/bootstrap/plugins/iCheck/icheck.min.js"></script>
+<script src="__ROOT__/../public/sweet/sweetalert.js"></script>
+<link rel="stylesheet" type="text/css" href="__ROOT__/../public/sweet/sweetalert.css">
+<script src="__ROOT__/../public/bootstrap/dist/js/app.min.js"></script>
+<script type="text/javascript">
+var setting = {
+	view: {
+		dblClickExpand: false,
+		addDiyDom: addMenu
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		beforeClick: function(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj(treeId);
+			if (treeNode.menu) {
+				return false;
+			} else {
+				zTree.expandNode(treeNode);
+				return false;
+			}
+		}
+	}
+};
+var zNodes ={$tree};
+
+function addMenu(treeId, treeNode) {
+	if (treeNode.menu){
+		var aObj = $("#" + treeNode.tId + '_a');
+		if (treeNode.menu) {
+			if ($("#diyBtn_"+treeNode.id).length>0) return;
+			var editStr = "<span id='diyBtn_space_" +treeNode.id+ "' >&nbsp;</span><span class='text' id='diyBtn_" +treeNode.id+ "' data-value='" +treeNode.menu+ "' style='color:"+(treeNode.menu==1?'#F00':'#CCC')+";cursor:pointer' onfocus='this.blur();'>菜单</span>";
+
+			aObj.after(editStr);
+			var btn = $("#diyBtn_"+treeNode.id);
+			var id = treeNode.id.split('_').pop();
+			if (btn) btn.bind("click", function(){
+				var value = btn.attr('data-value')==1?0:1;
+				$.post("__URL__/upfield.html",{"upkeyid":id,"field":'is_menu',"value":value},function(result){
+					if(result.error==0){
+						btn.attr('data-value',value);
+						if(value==1) btn.css('color','#F00');
+						else btn.css('color','#CCC');
+					}
+				},"json");
+			});
+		}
+	}
+}
+
+$(document).ready(function(){
+	$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	
+	$('.tablelist tbody tr:odd').addClass('odd');
+	
+	$(".tablelist tbody span[data-field]").click(function(event){
+		if(event.target.tagName=="SPAN"){
+			var id=$(this).parent().parent().attr("id"),field = $(this).attr("data-field"),oldcon=$(this).text();
+			$(this).html('<input type="text" class="dfinput" style="width:50px;" value="'+oldcon+'" />');//'+($(this).width()+50)+'
+			$(this).find("input").focus().select().bind("blur",function(){
+				var editcon=$(this).val(),_this=$(this).parent();
+				if(oldcon!=editcon&&editcon!=""){
+					$.post("__URL__/upfield.html",{"upkeyid":id,"field":field,"value":editcon},function(result){
+						if(result.error==0) _this.html(editcon.replace(/\s/g, "<br />\n"));
+					},"json");
+				}else _this.html(oldcon.replace(/\s/g, "<br />\n"));
+			});
+		}
+	});
+	$(".tablelist .form-control").change(function(event){
+		var id=$(this).parent().parent().parent().attr("id"),
+		menu_id = $(this).parent().attr("data-id"),
+		selmenu_id = $(this).children('option:selected').val();
+		if(menu_id!=selmenu_id){
+			$.post("__URL__/upfield.html",{"upkeyid":id,"field":'menu_id',"value":selmenu_id},function(result){
+				if(result.error==0) location.reload();
+			},"json");
+		}
+		
+	});
+});
+$('.btn').click(function(){
+	if($(this).data('href')){
+		location.href= $(this).data('href');
+	}
+});
+</script>
+</body>
+</html>
